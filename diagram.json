@@ -14,25 +14,33 @@
       "type": "wokwi-membrane-keypad",
       "id": "keypad1",
       "top": -78.8,
-      "left": -138.4,
+      "left": -301.6,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "rgb1",
+      "top": 234.4,
+      "left": 202.7,
+      "attrs": { "common": "cathode" }
     }
   ],
   "connections": [
-    ["pico:GP0", "$serialMonitor:RX", "", []],
-    ["pico:GP1", "$serialMonitor:TX", "", []],
-    ["keypad1:R1", "pico:GP2", "green", ["v0"]],
-    ["keypad1:R2", "pico:GP3", "green", ["v0"]],
-    ["keypad1:R3", "pico:GP8", "green", ["v0"]],
-    ["keypad1:R4", "pico:GP9", "green", ["v0"]],
-    ["keypad1:C1", "pico:GP20", "purple", ["v0"]],
-    ["keypad1:C2", "pico:GP19", "purple", ["v0"]],
-    ["keypad1:C3", "pico:GP18", "purple", ["v0"]],
-    ["keypad1:C4", "pico:GP17", "purple", ["v0"]]
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "keypad1:R1", "pico:GP2", "green", [ "v0" ] ],
+    [ "keypad1:R2", "pico:GP3", "green", [ "v0" ] ],
+    [ "keypad1:R3", "pico:GP8", "green", [ "v0" ] ],
+    [ "keypad1:R4", "pico:GP9", "green", [ "v0" ] ],
+    [ "keypad1:C1", "pico:GP20", "purple", [ "v0" ] ],
+    [ "keypad1:C2", "pico:GP19", "purple", [ "v0" ] ],
+    [ "keypad1:C3", "pico:GP18", "purple", [ "v0" ] ],
+    [ "keypad1:C4", "pico:GP17", "purple", [ "v0" ] ],
+    [ "pico:GP11", "rgb1:G", "green", [ "h0" ] ],
+    [ "pico:GP13", "rgb1:R", "green", [ "h0" ] ],
+    [ "rgb1:COM", "pico:GND.2", "green", [ "v0" ] ],
+    [ "pico:GP12", "rgb1:B", "green", [ "h0" ] ]
   ],
-  "dependencies": {},
-  "serialMonitor": {
-    "display": "auto",
-    "newline": "lf"
-  }
+  "serialMonitor": { "display": "auto", "newline": "lf" },
+  "dependencies": {}
 }
