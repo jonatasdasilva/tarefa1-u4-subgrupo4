@@ -29,11 +29,8 @@ char scan_keypad()
     return '\0'; // Nenhuma tecla pressionada
 }
 
-int main()
+void setup_keyboard()
 {
-
-    stdio_init_all();
-
     // Configuração das linhas do teclado como saída
     for (int i = 0; i < 4; i++)
     {
@@ -49,8 +46,18 @@ int main()
         gpio_set_dir(COL_PINS[i], GPIO_IN);
         gpio_pull_up(COL_PINS[i]); // pull-up interno
     }
+}
+
+int main()
+{
+
+    stdio_init_all();
+    // configuração do teclado
+    setup_keyboard();
+
     while (1)
     {
+        // leitura do teclado
         char key = scan_keypad();
         if (key != '\0')
         { // Se alguma tecla foi pressionada
