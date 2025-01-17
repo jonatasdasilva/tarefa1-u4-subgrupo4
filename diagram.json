@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "author": "equipe 2 - subgrupo 4",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-pi-pico-w",
+      "id": "pico",
+      "top": 275.15,
+      "left": 406.75,
+      "attrs": { "builder": "pico-sdk" }
+    },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad1",
+      "top": -78.8,
+      "left": -138.4,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    ["pico:GP0", "$serialMonitor:RX", "", []],
+    ["pico:GP1", "$serialMonitor:TX", "", []],
+    ["keypad1:R1", "pico:GP2", "green", ["v0"]],
+    ["keypad1:R2", "pico:GP3", "green", ["v0"]],
+    ["keypad1:R3", "pico:GP8", "green", ["v0"]],
+    ["keypad1:R4", "pico:GP9", "green", ["v0"]],
+    ["keypad1:C1", "pico:GP20", "purple", ["v0"]],
+    ["keypad1:C2", "pico:GP19", "purple", ["v0"]],
+    ["keypad1:C3", "pico:GP18", "purple", ["v0"]],
+    ["keypad1:C4", "pico:GP17", "purple", ["v0"]]
+  ],
+  "dependencies": {},
+  "serialMonitor": {
+    "display": "auto",
+    "newline": "lf"
+  }
+}
