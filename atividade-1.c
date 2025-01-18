@@ -23,9 +23,9 @@ const char KEYPAD[4][4] = {
 
 // Mapeamento dos caracteres para Código Morse.
 const char *morse_code[ROWS][COLS] = {
-    {".----", "..---", "...--", ".-"}, // 1, 2, 3, A
-    {"....-", ".....", "-....", "-..."}, // 4, 5, 6, B
-    {"--...", "---..", "----.", "-.-."}, // 7, 8, 9, C
+    {".----", "..---", "...--", ".-"},    // 1, 2, 3, A
+    {"....-", ".....", "-....", "-..."},  // 4, 5, 6, B
+    {"--...", "---..", "----.", "-.-."},  // 7, 8, 9, C
     {NULL, "-----", NULL, "-.--"}         // *, 0, #, D
 };
 
@@ -45,9 +45,9 @@ const char *morse_code[ROWS][COLS] = {
 // Mapeamento do teclado matricial para as notas musicais
 int note_frequencies[4][4] = {
     {NOTE_DO, NOTE_RE, NOTE_MI, 0},    // Linha 1: Teclas 1, 2, 3, A
-    {NOTE_FA, NOTE_SOL, NOTE_LA, 0},  // Linha 2: Teclas 4, 5, 6, B
-    {NOTE_SI, 0,       0,       0},   // Linha 3: Teclas 7, 8, 9, C
-    {0,       0,       0,       0}    // Linha 4: Teclas *, 0, #, D
+    {NOTE_FA, NOTE_SOL, NOTE_LA, 0},   // Linha 2: Teclas 4, 5, 6, B
+    {NOTE_SI, 0,       0,       0},    // Linha 3: Teclas 7, 8, 9, C
+    {0,       0,       0,       0}     // Linha 4: Teclas *, 0, #, D
 };
 
 char scan_keypad()
