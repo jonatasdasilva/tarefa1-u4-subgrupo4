@@ -161,13 +161,46 @@ int main()
         char key = scan_keypad();
         if (key != '\0')
         { // Se alguma tecla foi pressionada
-            printf("tecla pressionada: %c\n", key);
-            if (key == 'A')
+            if (key == '*'){
+                // Entra no menu de seleção de funcionalidades
+                char op = scan_keypad();
+                switch (op)
+                {
+                case 1:
+                    /* code */
+                    break;
+                
+                case 2:
+                    /* code */
+                    break;
+
+                case 3:
+                    /* code */
+                    break;
+                
+                case 4:
+                    /* code */
+                    break;
+                
+                case 5:
+                    execute_morse_in_buzzers();
+                    break;
+                
+                case '#':
+                    break;
+                
+                default:
+                    break;
+                }
+                break; // sai o if
+            }
+            //printf("tecla pressionada: %c\n", key);
+            if (key == '#')
             {
-                // e aqui vem a lógica da tecla
+                // Saído do programa
+                return 1;
             }
         }
-        sleep_ms(100);
     }
 
     return 0;
