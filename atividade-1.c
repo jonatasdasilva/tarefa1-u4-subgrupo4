@@ -7,6 +7,10 @@
 #define ROWS 4
 #define COLS 4
 
+#define LED_PIN_RED 13 // LED vermelho no GPIO 13
+#define LED_PIN_BLUE 12 // LED azul no GPIO 12
+#define LED_PIN_GREEN 11 // LED verde no GPIO 11
+
 const uint ROW_PINS[4] = {2, 3, 8, 9};     // Linhas: R1, R2, R3, R4
 const uint COL_PINS[4] = {20, 19, 18, 17}; // Colunas: C1, C2, C3, C4
 
@@ -155,10 +159,23 @@ int main()
     // configuração do teclado
     setup_keyboard();
 
+        // Configura o LED vermelho como saída
+    gpio_init(LED_PIN_RED);
+    gpio_set_dir(LED_PIN_RED, GPIO_OUT);
+    // Configura o LED azul como saída
+    gpio_init(LED_PIN_BLUE);
+    gpio_set_dir(LED_PIN_BLUE, GPIO_OUT);
+    // Configura o LED verde como saída
+    gpio_init(LED_PIN_GREEN);
+    gpio_set_dir(LED_PIN_GREEN, GPIO_OUT);
+
     while (1)
     {
         // leitura do teclado
         char key = scan_keypad();
+        gpio_put(LED_PIN_RED, false);
+        gpio_put(LED_PIN_BLUE, false);
+        gpio_put(LED_PIN_GREEN, false);
         if (key != '\0')
         { // Se alguma tecla foi pressionada
             if (key == '*'){
@@ -167,7 +184,33 @@ int main()
                 switch (op)
                 {
                 case 1:
-                    /* code */
+                    // Liga o LED vermelho se o botão "A" for pressionado
+                    gpio_put(LED_PIN_RED, true);
+                    sleep_ms(300); // Mantém o LED ligado por 300 ms
+                    } else 
+                    if (key == 'B')
+                        {
+                            // Liga o LED azul se o botão "B" for pressionado
+                            gpio_put(LED_PIN_BLUE, true);
+                            sleep_ms(300); // Mantém o LED ligado por 300 ms
+                        } else
+                            if(key== 'C'){
+                                // Liga o LED verde se o botão "C" for pressionado
+                                gpio_put(LED_PIN_GREEN, true);
+                                sleep_ms(300); // Mantém o LED ligado por 300 ms
+                            } else
+                                if(key == 'D'){
+                                    // Liga o LED branco se o botão "D" for pressionado
+                                    gpio_put(LED_PIN_RED, true);
+                                    gpio_put(LED_PIN_BLUE, true);
+                                    gpio_put(LED_PIN_GREEN, true);
+                                    sleep_ms(300); // Mantém o LED ligado por 300 ms
+                                } else{
+                                    // Desliga o LED
+                                    gpio_put(LED_PIN_RED, false);
+                                    gpio_put(LED_PIN_BLUE, false);
+                                    gpio_put(LED_PIN_GREEN, false);
+                                }
                     break;
                 
                 case 2:
