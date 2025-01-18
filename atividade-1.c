@@ -90,6 +90,20 @@ void buzzer_pwm(uint gpio, uint16_t frequency, uint16_t duration_ms) {
     gpio_put(gpio, 0);
 }
 
+// Emite a sequência de som em código Morse.
+void play_morse_code(const char *morse) {
+    // Recebe a strig correspondente ao código morse a ser transformado em som.
+    for (size_t i = 0; i < strlen(morse); i++) {
+        if (morse[i] == '.') {
+            buzzer_pwm(BUZZER_DOT, 5280, 100); // Os pontos: 100ms, increased frequency
+        } else if (morse[i] == '-') {
+            buzzer_pwm(BUZZER_DASH, 5280, 300); // Dash: 300ms, increased frequency
+        }
+        sleep_ms(100); // Gap between dots/dashes
+    }
+    sleep_ms(300); // Gap between letters
+}
+
 int main()
 {
 
