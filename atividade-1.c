@@ -112,11 +112,40 @@ void play_morse_code(const char *morse) {
         if (morse[i] == '.') {
             buzzer_pwm(BUZZER_DOT, 5280, 100); // Os pontos: 100ms, increased frequency
         } else if (morse[i] == '-') {
-            buzzer_pwm(BUZZER_DASH, 5280, 300); // Dash: 300ms, increased frequency
+            buzzer_pwm(BUZZER_DASH, 5280, 300); // Traços: 300ms, increased frequency
         }
-        sleep_ms(100); // Gap between dots/dashes
+        sleep_ms(100); // intervalos entre pontos e traços
     }
-    sleep_ms(300); // Gap between letters
+    sleep_ms(300); // intervalos entre letras
+}
+
+// Realiza a leitura do caracter do teclado e conversão em código morse.
+void execute_morse_in_buzzers() {
+  while (true) {
+    char key = scan_keypad(); // Ler novo caracter
+    if (key == '#'){
+        // Se for pressionado o caracter # sai da opção celecionada.
+      printf("Saindo...\n");
+      break;
+    }
+    if (key) {
+      if (key == '*')
+        printf("Key pressed: %c | Não existe código morse para o caracter. \n", key);
+      else
+        printf("Key pressed: %c | ", key);
+
+        // detecta qual o código morse para o caracter clicado.
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (KEYPAD[i][j] == key && morse_code[i][j] != NULL) {
+                    printf("Morse: %s\n", morse_code[i][j]);
+                    play_morse_code(morse_code[i][j]);
+                }
+            }
+        }
+    }
+    sleep_ms(50); // Delay Debounce
+  }
 }
 
 int main()
