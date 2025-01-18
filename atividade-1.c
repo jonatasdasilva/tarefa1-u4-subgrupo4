@@ -66,6 +66,21 @@ void setup_keyboard()
     }
 }
 
+// Inicializa os buzzers a serem utilizados.
+void initialization_buzzers() {
+    // Inicializa o pino GPIO para uso geral
+    gpio_init(BUZZER_DOT);
+    // Configura o pino como saída digital
+    gpio_set_dir(BUZZER_DOT, GPIO_OUT);
+    // Desliga p pino GPIO configurado como saída digital
+    gpio_put(BUZZER_DOT, 0);
+
+    // Refaz o mesmos passos para a outra porta definida para o outro Buzzer
+    gpio_init(BUZZER_DASH);
+    gpio_set_dir(BUZZER_DASH, GPIO_OUT);
+    gpio_put(BUZZER_DASH, 0);
+}
+
 // Configuração e PWM para os buzzers
 void buzzer_pwm(uint gpio, uint16_t frequency, uint16_t duration_ms) {
     // Configura a pino da gpio pasado como saída de modulação por largura de pulso (PWM).
