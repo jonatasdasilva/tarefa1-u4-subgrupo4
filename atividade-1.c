@@ -73,18 +73,18 @@ void setup_keyboard()
 // Emiti o sinal luminoso para o código Morse reerente ao ponto.
 void ponto()
 {
-    gpio_put(LED_RED,true);
+    gpio_put(LED_PIN_RED,true);
     sleep_ms(200);
-    gpio_put(LED_RED,false);
+    gpio_put(LED_PIN_RED,false);
     sleep_ms(125);
 }
 
 // Emiti o sinal luminoso para o código Morse reerente ao traço.
 void traco()
 {
-     gpio_put(LED_BLUE,true);
+     gpio_put(LED_PIN_BLUE,true);
      sleep_ms(200);
-     gpio_put(LED_BLUE,false);
+     gpio_put(LED_PIN_BLUE,false);
      sleep_ms(125);
 }
 
@@ -140,6 +140,39 @@ void play_morse_code(const char *morse) {
     }
     sleep_ms(300); // intervalos entre letras
 }
+
+//Função para ligar leds de acordo com a tecla pressionada
+void liga_leds(char key) {
+    if (key == 'A') {
+        // Liga o LED vermelho se o botão "A" for pressionado
+        gpio_put(LED_PIN_RED, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (key == 'B') {
+        // Liga o LED azul se o botão "B" for pressionado
+        gpio_put(LED_PIN_BLUE, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (key == 'C') {
+        // Liga o LED verde se o botão "C" for pressionado
+        gpio_put(LED_PIN_GREEN, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (key == 'D') {
+        // Liga o LED branco se o botão "D" for pressionado
+        gpio_put(LED_PIN_RED, true);
+        gpio_put(LED_PIN_BLUE, true);
+        gpio_put(LED_PIN_GREEN, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else {
+        // Desliga todos os LEDs se nenhuma tecla relevante for pressionada
+        gpio_put(LED_PIN_RED, false);
+        gpio_put(LED_PIN_BLUE, false);
+        gpio_put(LED_PIN_GREEN, false);
+    }
+}
+
 
 // Realiza a leitura do caracter do teclado e conversão em código morse.
 void execute_morse_in_buzzers() {
@@ -202,33 +235,7 @@ int main()
                 switch (op)
                 {
                 case 1:
-                    // Liga o LED vermelho se o botão "A" for pressionado
-                    gpio_put(LED_PIN_RED, true);
-                    sleep_ms(300); // Mantém o LED ligado por 300 ms
-                    } else 
-                    if (key == 'B')
-                        {
-                            // Liga o LED azul se o botão "B" for pressionado
-                            gpio_put(LED_PIN_BLUE, true);
-                            sleep_ms(300); // Mantém o LED ligado por 300 ms
-                        } else
-                            if(key== 'C'){
-                                // Liga o LED verde se o botão "C" for pressionado
-                                gpio_put(LED_PIN_GREEN, true);
-                                sleep_ms(300); // Mantém o LED ligado por 300 ms
-                            } else
-                                if(key == 'D'){
-                                    // Liga o LED branco se o botão "D" for pressionado
-                                    gpio_put(LED_PIN_RED, true);
-                                    gpio_put(LED_PIN_BLUE, true);
-                                    gpio_put(LED_PIN_GREEN, true);
-                                    sleep_ms(300); // Mantém o LED ligado por 300 ms
-                                } else{
-                                    // Desliga o LED
-                                    gpio_put(LED_PIN_RED, false);
-                                    gpio_put(LED_PIN_BLUE, false);
-                                    gpio_put(LED_PIN_GREEN, false);
-                                }
+                    liga_leds(key);
                     break;
                 
                 case 2:
@@ -263,4 +270,5 @@ int main()
             }
         }
     return 0;
+    }
 }
