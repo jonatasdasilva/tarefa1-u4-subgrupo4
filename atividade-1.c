@@ -70,6 +70,24 @@ void setup_keyboard()
     }
 }
 
+// Emiti o sinal luminoso para o código Morse reerente ao ponto.
+void ponto()
+{
+    gpio_put(LED_RED,true);
+    sleep_ms(200);
+    gpio_put(LED_RED,false);
+    sleep_ms(125);
+}
+
+// Emiti o sinal luminoso para o código Morse reerente ao traço.
+void traco()
+{
+     gpio_put(LED_BLUE,true);
+     sleep_ms(200);
+     gpio_put(LED_BLUE,false);
+     sleep_ms(125);
+}
+
 // Inicializa os buzzers a serem utilizados.
 void initialization_buzzers() {
     // Inicializa o pino GPIO para uso geral
@@ -159,7 +177,7 @@ int main()
     // configuração do teclado
     setup_keyboard();
 
-        // Configura o LED vermelho como saída
+    // Configura o LED vermelho como saída
     gpio_init(LED_PIN_RED);
     gpio_set_dir(LED_PIN_RED, GPIO_OUT);
     // Configura o LED azul como saída
