@@ -4,17 +4,18 @@
 ## **🛠 Projeto: Leitura de Teclado Matricial com Raspberry Pi Pico**  
 
 ### 📌 **Descrição**  
-Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico**. O código identifica a tecla pressionada e exibe a informação no **monitor serial**.  
+Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico W**. O código implementa uma variedade de aplicações, que conecta o periférico principal (teclado matricial) à funcionalidades específicas para cada uma das aplicações. A função principal do teclado é identificar a tecla pressionada, executar uma ação desejada e exibe a informação no **monitor serial**.  
 
 ---
 
 ### 📋 **Dependências**  
 Antes de compilar e rodar o projeto, certifique-se de que possui:  
 
-- **Raspberry Pi Pico SDK** configurado corretamente  
-- **CMake** instalado  
-- **Compilador ARM GCC** instalado  
-- **Extensão Raspberry Pi Pico para VSCode** (opcional)  
+- 🔧 **Raspberry Pi Pico SDK** `configurado corretamente`  
+- ✔️ **CMake**  `instalado`
+- ✔️ **Compilador ARM GCC**  `instalado`
+- ✔️ **Extensão Wokwi Simulator**  `instalado`
+- ➕ **Extensão Raspberry Pi Pico para VSCode** `(opcional)`
 
 ---
 
@@ -28,8 +29,6 @@ Antes de compilar e rodar o projeto, certifique-se de que possui:
 | R4            | GP9         | C4            | GP17        |
 
 > **Obs.:** O teclado utiliza **pull-up interno** para as colunas.  
-
----
 
 ---
 
@@ -58,5 +57,71 @@ tecla pressionada: 5
 tecla pressionada: B
 tecla pressionada: #
 ```
-
 ---
+
+### 📂 Aplicações
+
+#### 1. 🚥 Conversor em sinal luminoso RGB
+
+#### 2. 
+
+#### 3. 
+
+#### 4. 🚨 Conversor de Código Morse em sinal luminoso 
+
+#### 5. 🔉 Conversor de Código Morse em som
+
+##### 🎯 Objetivo
+
+A aplicação **converte** as teclas pressionadas em um teclado 4x4 em seus respectivos **códigos Morse**. Ao detectar uma tecla, a aplicação emite um som correspondente aos sinais longos (traços) e curtos (pontos) do código Morse daquela letra ou número. A frequência e a duração dos sinais sonoros são configurados pelo seu padrão para simular a transmissão tradicional de código Morse.
+
+##### ⚡ Conexão no Raspberry Pi Pico W
+
+Para esta aplicação foi utilizado: 2 Buzzers e 1 Keypad. Além do Keypad já mencionado anteriormente, os buzzers são configurados da forma abaixo.
+
+| **Bazzer**  | **Pino GPIO** |
+|-------------|---------------|
+| bz1:1       | GP10          |
+| bz1:2       | GND4          |
+| bz2:1       | GP22          |
+| bz2:2       | GND6          |
+
+##### 📄 Funcionamento
+
+A aplicação funciona da seguinte forma: o microcontrolador lê a matriz de teclas do teclado 4x4 e identifica a tecla pressionada. Em seguida, a aplicação consulta uma tabela de correspondência para encontrar o código Morse associado àquela tecla. Por fim, um sinal sonoro é gerado, com pulsos de curta e longa duração representando os pontos e traços do código Morse, respectivamente.
+
+Para reproduzir os sons do código Morse, foram configurados pulsos sonoros de diferentes durações:
+
+- Ponto: Um pulso curto com duração de 100ms.
+- Traço: Um pulso longo com duração de 300ms.
+  
+Esses pulsos são gerados por um buzzer, que é acionado com uma frequência de 5280Hz. A combinação de pontos e traços, com as respectivas pausas de 100ms entre eles, forma os caracteres do código Morse.
+
+###### 📑 Detalhamento
+
+A aplicação inicia-se configurando os buzzers através da função `initialization_buzzers()`.
+
+Após a configuração, o método `execute_morse_in_buzzers()` entra em um loop, aguardando a entrada do usuário. Ao detectar uma tecla pressionada, a função consulta uma **tabela de correspondência** (`morse_code`) para encontrar o **código Morse** associado à tecla.
+
+Em seguida, o código Morse é exibido na tela e a função `play_morse_code()` é chamada para gerar os sinais sonoros correspondentes aos pontos e traços do código. 
+
+A função `play_morse_code()` utiliza a função `buzzer_pwm()` para controlar a *frequência** e a **duração** dos pulsos sonoros emitidos pelos **buzzers**, reproduzindo assim o **som do código Morse**.
+
+##### 📖 Exemplos
+
+Ao ser pressionado as teclas: 1, 2, 3 e A. A saída abaixo é gerada na tela e o respectivo pulso sonoro emitido.
+
+```
+Morse Code Keyboard Ready
+
+Key pressed: 1 | Morse: .----
+Key pressed: 2 | Morse: ..---
+Key pressed: 3 | Morse: ...--
+Key pressed: A | Morse: .-
+```
+
+##### 📌 Conclusão
+
+A aplicação implementa um conversor de teclado para código Morse. Onde ao detectar uma tecla pressionada no **Keypad** e gera **pulsos sonoros** correspondentes aos pontos e traços em **Código Morse**.  Esses sinais são então amplificados por um buzzer para produzir o som característico do código Morse.
+
+Assim, mesmo de forma limitada, é possível enviar uma mensagem códificada, a qual pode ser interpretada pelo receptor.
