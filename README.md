@@ -64,7 +64,7 @@ tecla pressionada: #
 
 Este projeto utiliza um display de 7 segmentos de cátodo comum para exibir apenas os números, quando pressionados, controlado por um Raspberry Pi Pico. O display de 7 segmentos é composto por 7 LEDs que formam números e alguns caracteres, e é controlado por pinos GPIO da placa.
 
-Através da programação no Raspberry Pi Pico, os pinos de segmento são ativados de forma a acender os LEDs corretos do display, formando os números e caracteres. Cada vez que um número é exibido, os segmentos correspondentes são acionados de acordo com o padrão de cada número.
+Através da programação no Raspberry Pi Pico, os pinos de segmento são ativados de forma a acender os LEDs corretos do display, formando os números. Cada vez que um número é exibido, os segmentos correspondentes são acionados de acordo com o padrão de cada número.
 
 
 
