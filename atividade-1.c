@@ -33,6 +33,23 @@ const char *morse_code[ROWS][COLS] = {
 #define BUZZER_DOT 10
 #define BUZZER_DASH 22
 
+// Frequências das notas musicais (em Hertz)
+#define NOTE_DO  262   // Nota Dó
+#define NOTE_RE  294   // Nota Ré
+#define NOTE_MI  330   // Nota Mi
+#define NOTE_FA  349   // Nota Fá
+#define NOTE_SOL 392   // Nota Sol
+#define NOTE_LA  440   // Nota Lá
+#define NOTE_SI  494   // Nota Si
+
+// Mapeamento do teclado matricial para as notas musicais
+int note_frequencies[4][4] = {
+    {NOTE_DO, NOTE_RE, NOTE_MI, 0},    // Linha 1: Teclas 1, 2, 3, A
+    {NOTE_FA, NOTE_SOL, NOTE_LA, 0},  // Linha 2: Teclas 4, 5, 6, B
+    {NOTE_SI, 0,       0,       0},   // Linha 3: Teclas 7, 8, 9, C
+    {0,       0,       0,       0}    // Linha 4: Teclas *, 0, #, D
+};
+
 char scan_keypad()
 {
     for (int row = 0; row < 4; row++)
@@ -67,6 +84,60 @@ void setup_keyboard()
         gpio_init(COL_PINS[i]);
         gpio_set_dir(COL_PINS[i], GPIO_IN);
         gpio_pull_up(COL_PINS[i]); // pull-up interno
+    }
+}
+
+// Função para gerar o som correspondente a uma frequência
+void play_tone(uint frequency, uint duration_ms) {
+    if (frequency == 0) return; // Não gera som se a tecla não for válida
+
+    uint period = 1000000 / frequency; // Período do sinal (em microssegundos)
+    uint half_period = period / 2;     // Meio período para alternar o estado do pino
+
+    // Gera o sinal de áudio no buzzer pelo tempo especificado
+    for (uint i = 0; i < (duration_ms * 1000) / period; i++) {
+        gpio_put(BUZZER_DOT, 1);       // Liga o buzzer
+        sleep_us(half_period);        // Aguarda metade do período
+        gpio_put(BUZZER_DOT, 0);       // Desliga o buzzer
+        sleep_us(half_period);        // Aguarda a outra metade do período
+    }
+}
+
+// Função que implementa o teclado musical
+void music_keyboard() {
+    // Configura os pinos do teclado musical
+    for (int i = 0; i < 4; i++) {
+        gpio_init(ROW_PINS[i]);
+        gpio_set_dir(ROW_PINS[i], GPIO_IN);  // Define como entrada
+        gpio_pull_up(ROW_PINS[i]);           // Habilita o pull-up interno
+    }
+
+    for (int i = 0; i < 4; i++) {
+        gpio_init(COL_PINS[i]);
+        gpio_set_dir(COL_PINS[i], GPIO_OUT); // Define como saída
+        gpio_put(COL_PINS[i], 1);           // Inicializa como nível alto
+    }
+
+    // Loop infinito para detectar teclas pressionadas e tocar as notas
+    while (1) {
+        for (int col = 0; col < 4; col++) {
+            gpio_put(COL_PINS[col], 0); // Ativa a coluna atual (nível baixo)
+
+            for (int row = 0; row < 4; row++) {
+                if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
+                    uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
+                    play_tone(frequency, 500); // Toca a nota correspondente por 500ms
+
+                    while (!gpio_get(ROW_PINS[row])) {
+                        sleep_ms(10); // Pequena espera para evitar leitura contínua
+                    }
+                }
+            }
+
+            gpio_put(COL_PINS[col], 1); // Desativa a coluna atual (nível alto)
+        }
+
+        sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
     }
 }
 
@@ -239,7 +310,7 @@ int main()
                     break;
                 
                 case 2:
-                    /* code */
+                      music_keyboard(); // Chamando a funcionalidade do teclado musical
                     break;
 
                 case 3:
