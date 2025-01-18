@@ -70,24 +70,6 @@ void setup_keyboard()
     }
 }
 
-// Emiti o sinal luminoso para o código Morse reerente ao ponto.
-void ponto()
-{
-    gpio_put(LED_PIN_RED,true);
-    sleep_ms(200);
-    gpio_put(LED_PIN_RED,false);
-    sleep_ms(125);
-}
-
-// Emiti o sinal luminoso para o código Morse reerente ao traço.
-void traco()
-{
-     gpio_put(LED_PIN_BLUE,true);
-     sleep_ms(200);
-     gpio_put(LED_PIN_BLUE,false);
-     sleep_ms(125);
-}
-
 // Inicializa os buzzers a serem utilizados.
 void initialization_buzzers() {
     // Inicializa o pino GPIO para uso geral
@@ -139,6 +121,36 @@ void play_morse_code(const char *morse) {
         sleep_ms(100); // intervalos entre pontos e traços
     }
     sleep_ms(300); // intervalos entre letras
+}
+
+// Emiti o sinal luminoso para o código Morse referente ao ponto.
+void ponto()
+{
+    gpio_put(LED_PIN_GREEN,true);
+    sleep_ms(200);
+    gpio_put(LED_PIN_GREEN,false);
+    sleep_ms(125);
+}
+
+// Emiti o sinal luminoso para o código Morse referente ao traço.
+void traco()
+{
+     gpio_put(LED_PIN_BLUE,true);
+     sleep_ms(200);
+     gpio_put(LED_PIN_BLUE,false);
+     sleep_ms(125);
+}
+void led_blink_morse(const char *morse) {
+    // Recebe a strig correspondente ao código morse a ser transformado em som.
+    for (size_t i = 0; i < strlen(morse); i++) {
+        if (morse[i] == '.') {
+            ponto(); // chama função ponto, pisca em verde
+        } else if (morse[i] == '-') {
+            traco(); // chama a função traço, pisca em azul
+        }
+    }
+    gpio_put(LED_PIN_RED,true); // fica em vermelho no intervalo entre letras
+    sleep_ms(250); // intervalos entre letras
 }
 
 //Função para ligar leds de acordo com a tecla pressionada
