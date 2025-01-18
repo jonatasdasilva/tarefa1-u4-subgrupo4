@@ -52,6 +52,21 @@ void setup_keyboard()
     }
 }
 
+void ponto()
+{
+          gpio_put(LED_RED,true);
+          sleep_ms(200);
+          gpio_put(LED_RED,false);
+          sleep_ms(125);
+}
+
+void traco()
+{
+          gpio_put(LED_BLUE,true);
+          sleep_ms(200);
+          gpio_put(LED_BLUE,false);
+          sleep_ms(125);
+}
 int main()
 {
 
