@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build\PushGit.uf2'
+elf = 'build\PushGit.elf'
