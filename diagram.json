@@ -14,7 +14,7 @@
       "type": "wokwi-membrane-keypad",
       "id": "keypad1",
       "top": -78.8,
-      "left": -301.6,
+      "left": 600.0,
       "attrs": {}
     },
     {
