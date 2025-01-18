@@ -1,5 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 #include "pico/stdlib.h"
+#include "hardware/pwm.h"
+#include "hardware/gpio.h"
+
+#define ROWS 4
+#define COLS 4
 
 const uint ROW_PINS[4] = {2, 3, 8, 9};     // Linhas: R1, R2, R3, R4
 const uint COL_PINS[4] = {20, 19, 18, 17}; // Colunas: C1, C2, C3, C4
@@ -10,6 +16,18 @@ const char KEYPAD[4][4] = {
     {'4', '5', '6', 'B'},
     {'7', '8', '9', 'C'},
     {'*', '0', '#', 'D'}};
+
+// Mapeamento dos caracteres para Código Morse.
+const char *morse_code[ROWS][COLS] = {
+    {".----", "..---", "...--", ".-"}, // 1, 2, 3, A
+    {"....-", ".....", "-....", "-..."}, // 4, 5, 6, B
+    {"--...", "---..", "----.", "-.-."}, // 7, 8, 9, C
+    {NULL, "-----", NULL, "-.--"}         // *, 0, #, D
+};
+
+// GPIO pins for buzzers
+#define BUZZER_DOT 10
+#define BUZZER_DASH 22
 
 char scan_keypad()
 {
