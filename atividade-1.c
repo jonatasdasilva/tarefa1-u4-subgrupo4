@@ -66,6 +66,30 @@ void setup_keyboard()
     }
 }
 
+// Configuração e PWM para os buzzers
+void buzzer_pwm(uint gpio, uint16_t frequency, uint16_t duration_ms) {
+    // Configura a pino da gpio pasado como saída de modulação por largura de pulso (PWM).
+    gpio_set_function(gpio, GPIO_FUNC_PWM);
+    // Mapeia um pino GPIO para uma fatia de PWM.
+    uint slice = pwm_gpio_to_slice_num(gpio);
+
+    // Define o período de um sinal PWM em uma determinada fatia (slice).
+    pwm_set_wrap(slice, 125000000 / frequency);
+    // Configura a modulação por largura de pulso (PWM) em um dos canais de um slice.
+    pwm_set_chan_level(slice, PWM_CHAN_A, (125000000 / frequency) / 2);
+    // Habilita a geração de um sinal PWM em um determinado slice do controlador.
+    pwm_set_enabled(slice, true);
+
+    sleep_ms(duration_ms);
+
+    pwm_set_enabled(slice, false);
+    gpio_set_function(gpio, GPIO_FUNC_SIO);
+    // Seta a direçao da GPIO como saída
+    gpio_set_dir(gpio, GPIO_OUT);
+    // Define o estado do pino gpio como baixo (0 V)
+    gpio_put(gpio, 0);
+}
+
 int main()
 {
 
