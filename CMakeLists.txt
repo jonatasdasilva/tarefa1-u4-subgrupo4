@@ -36,6 +36,7 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(atividade-1 atividade-1.c )
+target_link_libraries(atividade-1 pico_stdlib hardware_pwm) 
 
 pico_set_program_name(atividade-1 "atividade-1")
 pico_set_program_version(atividade-1 "0.1")
