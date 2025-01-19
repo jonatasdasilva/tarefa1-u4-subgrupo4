@@ -513,6 +513,7 @@ int main()
           }
 
           if (key == '2') {
+            menu_music();
             printf("\n");
             sleep_ms(50);
             music_keyboard(); // Chamando a funcionalidade do teclado musical
@@ -521,6 +522,7 @@ int main()
           }
 
           if (key == '3') {
+            menu_morse_leds();
             printf("\n");
             sleep_ms(50);
             execute_morse_in_leds();
@@ -529,6 +531,7 @@ int main()
           }
 
           if (key == '4') {
+            menu_morse_leds();
             printf("\n");
             sleep_ms(50);
             execute_morse_in_buzzers();
