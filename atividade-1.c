@@ -406,13 +406,13 @@ int main()
 
           if (key == '3') {
             printf("\n");
-            execute_morse_in_buzzers();
+            execute_morse_in_leds();
             menu();
           }
 
-          if (key == '3') {
+          if (key == '4') {
             printf("\n");
-            execute_morse_in_leds();
+            execute_morse_in_buzzers();
             menu();
           }
 
