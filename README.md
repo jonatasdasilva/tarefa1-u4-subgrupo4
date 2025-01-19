@@ -63,53 +63,50 @@ tecla pressionada: #
 
 #### 1. 💡 Função liga_leds(key)
 
-A função liga_leds controla o estado de LEDs conectados à Raspberry Pi Pico com base na tecla pressionada no teclado matricial. Cada tecla específica (A, B, C, ou D) acende um LED correspondente ou combinações de LEDs.
+A função liga_leds() é responsável por controlar LEDs em um sistema baseado em GPIO (General Purpose Input/Output), reagindo a diferentes entradas de um teclado matricial. Ela liga e desliga LEDs específicos ou executa uma sequência de transições de cores conforme os botões pressionados.
 
 ---
 
-##### 🗒 Descrição
+##### 🔄 Comportamento Principal
 
-A função recebe como argumento a tecla pressionada (key) e executa as seguintes ações:
+A função fica em um loop contínuo, aguardando a entrada de uma tecla através da função scan_keypad(). Dependendo da tecla pressionada, ela ativa LEDs específicos e/ou realiza transições de cores.
 
-'A': Liga o LED vermelho. 🔴
+##### ⚙ Funcionamento:
 
-'B': Liga o LED azul. 🔵
+LEDs Desligados Inicialmente: Todos os LEDs (vermelho, azul e verde) são desligados no início do loop.
 
-'C': Liga o LED verde. 🟢
+Entrada de Teclado: A função aguarda o pressionamento de teclas, executando ações específicas para cada tecla pressionada.
 
-'D': Liga todos os LEDs (cria luz branca combinando vermelho, azul e verde). ⚪️
+##### 🎯 Comandos de Teclas:
 
-Qualquer outra tecla desliga todos os LEDs.
-
-Após acender o LED correspondente, o LED permanece ligado por 300 milissegundos antes de ser desligado.
-
----
-
-##### 🎯 Parâmetros
-
-key (char): Caracter correspondente à tecla pressionada no teclado matricial. Deve ser uma das seguintes opções:
-
-'A': Liga o LED vermelho.
-
-'B': Liga o LED azul.
-
-'C': Liga o LED verde.
-
-'D': Liga todos os LEDs (luz branca).
+- Tecla #: Sai da função e encerra o loop. `Exemplo: Saindo... 👋`
+- Tecla A: Liga o LED vermelho por 300 ms. 🔴
+-Tecla B: Liga o LED azul por 300 ms. 🔵
+- Tecla C: Liga o LED verde por 300 ms. 🟢
+- Tecla D: Liga todos os LEDs (vermelho, azul e verde) por 300 ms. ⚪
+- Tecla 1: Liga o LED ciano (azul + verde) por 300 ms. 💠
+- Tecla 2: Liga o LED magenta (vermelho + azul) por 300 ms. 🟣
+- Tecla 3:  Liga o LED amarelo (vermelho + verde) por 300 ms. 🟡
+- Tecla 0: Executa uma sequência de transições de cores entre vermelho, amarelo, - verde, ciano, azul e magenta, criando um efeito visual por 100 ms para cada cor. 🌈
+- Qualquer outra tecla: Desliga todos os LEDs. ❌
 
 ---
+
+##### ⏱ Delays:
+
+Após cada ação, há um pequeno atraso de 50 ms para evitar o "debounce" do teclado, garantindo que os botões sejam lidos de forma precisa.
+
+##### 🖥 Função Dependente:
+
+A função utiliza gpio_put() para controlar o estado dos LEDs.
+A função scan_keypad() é usada para ler a entrada do teclado matricial.
+
 
 ##### ⚒️ Fluxo de Execução
 
 1. Verifica o valor do parâmetro key.
-
-
 2. Liga o LED correspondente ao valor de key
-
-
 3. Caso a tecla pressionada não corresponda a nenhuma das opções acima, todos os LEDs são desligados.
-
-
 4. O LED permanece ligado por 300 milissegundos antes de ser desligado.
 
 ---
@@ -128,9 +125,7 @@ A função usa sleep_ms(300) para manter o LED aceso por 300 milissegundos.
 Certifique-se de que os LEDs estão conectados corretamente aos GPIOs especificados:
 
 LED vermelho: GPIO 13.
-
 LED azul: GPIO 12.
-
 LED verde: GPIO 11.
 
 ---
@@ -144,6 +139,8 @@ Configuração inicial dos GPIOs, realizada antes de chamar a função. Certifiq
 gpio_init(LED_PIN_RED);
 gpio_set_dir(LED_PIN_RED, GPIO_OUT);
 gpio_put(LED_PIN_RED, false);
+
+---
 
 #### 2. 🚨 Conversor de Código Morse em sinal luminoso 
 
