@@ -261,22 +261,22 @@ void liga_leds() {
 // Realiza a leitura do caracter do teclado e conversão em código morse.
 void execute_morse_in_buzzers() {
   while (true) {
-    char key = scan_keypad(); // Ler novo caracter
-    if (key == '#'){
+    char pressed = scan_keypad(); // Ler novo caracter
+    if (pressed == '#'){
         // Se for pressionado o caracter # sai da opção celecionada.
       printf("Saindo...\n");
       break;
     }
-    if (key) {
-      if (key == '*')
-        printf("Key pressed: %c | Não existe código morse para o caracter. \n", key);
+    if (pressed) {
+      if (pressed == '*')
+        printf("Key pressed: %c | Não existe código morse para o caracter. \n", pressed);
       else
-        printf("Key pressed: %c | ", key);
+        printf("Key pressed: %c | ", pressed);
 
         // detecta qual o código morse para o caracter clicado.
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (KEYPAD[i][j] == key && morse_code[i][j] != NULL) {
+                if (KEYPAD[i][j] == pressed && morse_code[i][j] != NULL) {
                     printf("Morse: %s\n", morse_code[i][j]);
                     play_morse_code(morse_code[i][j]);
                 }
@@ -304,22 +304,22 @@ void init_morse_led(const char *morse) {
 // Realiza a leitura do caracter do teclado e conversão em código morse.
 void execute_morse_in_leds() {
   while (true) {
-    char key = scan_keypad(); // Ler novo caracter
-    if (key == '#'){
+    char pressed = scan_keypad(); // Ler novo caracter
+    if (pressed == '#'){
         // Se for pressionado o caracter # sai da opção celecionada.
       printf("Saindo...\n");
       break;
     }
-    if (key) {
-      if (key == '*')
-        printf("Key pressed: %c | Não existe código morse para o caracter. \n", key);
+    if (pressed) {
+      if (pressed == '*')
+        printf("Key pressed: %c | Não existe código morse para o caracter. \n", pressed);
       else
-        printf("Key pressed: %c | ", key);
+        printf("Key pressed: %c | ", pressed);
 
         // detecta qual o código morse para o caracter clicado.
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (KEYPAD[i][j] == key && morse_code[i][j] != NULL) {
+                if (KEYPAD[i][j] == pressed && morse_code[i][j] != NULL) {
                     printf("Morse: %s\n", morse_code[i][j]);
                     init_morse_led(morse_code[i][j]);
                 }
@@ -348,7 +348,7 @@ void menu () {
     printf("Bem vindo ao Teclado Matricial com Raspberry Pi Pico W\n");
     printf("Escolha uma das opções:\n");
     printf("1. Liga Leds\n");
-    printf("2. Música em Keyboard\n");
+    printf("2. Notas Musicais em Keyboard\n");
     printf("3. Código Morse luminoso\n");
     printf("4. Código Morse Sonoro\n");
     //printf("3. \n");
@@ -369,18 +369,17 @@ void menu_leds () {
 int main()
 {
 
-  printf("Digite  *  para entrar no Menu de Aplicações\n");
   stdio_init_all();
   // configuração do teclado
   setup_keyboard();
   inicializa_leds();
   initialization_buzzers();
+  printf("Digite  *  para entrar no Menu de Aplicações\n");
 
   while (1)
   {
     // leitura do teclado
     char key = scan_keypad();
-    //printf("saiu na função scan\n");
     if (key != '\0')
     { // Se alguma tecla foi pressionada
       printf("tecla pressionada: %c\n", key);
@@ -393,12 +392,15 @@ int main()
           
           if (key == '1') {
             menu_leds ();
+            sleep_ms(50);
             liga_leds();
             sleep_ms(50);
             menu();
           }
 
           if (key == '2') {
+            printf("\n");
+            sleep_ms(50);
             music_keyboard(); // Chamando a funcionalidade do teclado musical
             sleep_ms(50);
             menu();
@@ -406,13 +408,17 @@ int main()
 
           if (key == '3') {
             printf("\n");
+            sleep_ms(50);
             execute_morse_in_leds();
+            sleep_ms(50);
             menu();
           }
 
           if (key == '4') {
             printf("\n");
+            sleep_ms(50);
             execute_morse_in_buzzers();
+            sleep_ms(50);
             menu();
           }
 
@@ -424,8 +430,9 @@ int main()
         }
       }
 
-      if (key == '1'){
-          
+      if (key != '#'){
+        printf("Pressione a tecla * para menu de aplicações.\n");
+        sleep_ms(50);
       }
       //printf("tecla pressionada: %c\n", key);
       if (key == '#')
