@@ -103,7 +103,7 @@ void play_tone(uint frequency, uint duration_ms) {
     }
 }
 
-// Função que implementa o teclado musical com retorno ao menu
+// Função que implementa o teclado musical
 void music_keyboard() {
     // Configura os pinos do teclado musical
     for (int i = 0; i < 4; i++) {
@@ -125,19 +125,8 @@ void music_keyboard() {
 
             for (int row = 0; row < 4; row++) {
                 if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
-                    char key = KEYPAD[row][col]; // Determina a tecla pressionada
-
-                    if (key == '#') { // Verifica se é o comando para sair
-                        printf("Saindo do teclado musical...\n");
-                        return; // Sai da função para voltar ao menu
-                    }
-
-                    if (key >= '1' && key <= '7') { // Apenas teclas válidas para notas
-                        uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
-                        play_tone(frequency, 500); // Toca a nota correspondente por 500ms
-                    } else {
-                        printf("Tecla %c não corresponde a uma nota.\n", key);
-                    }
+                    uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
+                    play_tone(frequency, 500); // Toca a nota correspondente por 500ms
 
                     while (!gpio_get(ROW_PINS[row])) {
                         sleep_ms(10); // Pequena espera para evitar leitura contínua
@@ -151,6 +140,7 @@ void music_keyboard() {
         sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
     }
 }
+
 // Emiti o sinal luminoso para o código Morse reerente ao ponto.
 void ponto()
 {
@@ -425,9 +415,9 @@ void menu () {
     printf("Bem vindo ao Teclado Matricial com Raspberry Pi Pico W\n");
     printf("Escolha uma das opções:\n");
     printf("1. Liga Leds\n");
-    printf("2. Música em Keyboard\n");
-    printf("3. Código Morse luminoso\n");
-    printf("4. Código Morse Sonoro\n");
+    printf("2. Código Morse luminoso\n");
+    printf("3. Código Morse Sonoro\n");
+    printf("4. Transforma o teclado em um Piano de Dó a Si\n");
     //printf("3. \n");
     printf("#. Para sair\n");
 }
@@ -456,7 +446,7 @@ void menu_music () {
     printf("5. Sol\n");
     printf("6. Lá\n");
     printf("7. Sí\n");
-    printf("#. Para Sair\n");
+    printf("Reinicie o programa para voltar ao menu\n");
 
 }
 //Menu para função morse_leds
@@ -513,10 +503,10 @@ int main()
           }
 
           if (key == '2') {
-            menu_music();
+            menu_morse_leds();
             printf("\n");
             sleep_ms(50);
-            music_keyboard(); // Chamando a funcionalidade do teclado musical
+            execute_morse_in_leds(); // Chamando a funcionalidade do teclado musical
             sleep_ms(50);
             menu();
           }
@@ -525,16 +515,16 @@ int main()
             menu_morse_leds();
             printf("\n");
             sleep_ms(50);
-            execute_morse_in_leds();
+            execute_morse_in_buzzers();
             sleep_ms(50);
             menu();
           }
 
           if (key == '4') {
-            menu_morse_leds();
+            menu_music ();
             printf("\n");
             sleep_ms(50);
-            execute_morse_in_buzzers();
+            music_keyboard();
             sleep_ms(50);
             menu();
           }
