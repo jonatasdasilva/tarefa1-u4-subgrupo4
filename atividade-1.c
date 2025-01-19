@@ -272,6 +272,48 @@ void execute_morse_in_buzzers() {
   }
 }
 
+void init_morse_led(const char *morse) {
+    // Recebe a strig correspondente ao código morse a ser transformado em som.
+    for (size_t i = 0; i < strlen(morse); i++) {
+        if (morse[i] == '.') {
+            ponto(); // led vermelho
+        } else if (morse[i] == '-') {
+            traco();// led azul
+        }
+       sleep_ms(125); 
+    }
+    sleep_ms(250);
+}
+
+// Realiza a leitura do caracter do teclado e conversão em código morse.
+void execute_morse_in_leds() {
+  while (true) {
+    char key = scan_keypad(); // Ler novo caracter
+    if (key == '#'){
+        // Se for pressionado o caracter # sai da opção celecionada.
+      printf("Saindo...\n");
+      break;
+    }
+    if (key) {
+      if (key == '*')
+        printf("Key pressed: %c | Não existe código morse para o caracter. \n", key);
+      else
+        printf("Key pressed: %c | ", key);
+
+        // detecta qual o código morse para o caracter clicado.
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (KEYPAD[i][j] == key && morse_code[i][j] != NULL) {
+                    printf("Morse: %s\n", morse_code[i][j]);
+                    init_morse_led(morse_code[i][j]);
+                }
+            }
+        }
+    }
+    sleep_ms(50); // Delay Debounce
+  }
+}
+
 int main()
 {
 
