@@ -125,9 +125,17 @@ void music_keyboard() {
 
             for (int row = 0; row < 4; row++) {
                 if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
+                    // Verifica se a tecla pressionada é o caractere '#'
+                    if (row == 3 && col == 2) { // Assume que '#' está na linha 3, coluna 2
+                        printf("Saindo...\n");
+                        return; // Sai da função e retorna ao menu principal
+                    }
+
+                    // Caso contrário, obtém a frequência da tecla e toca a nota
                     uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
                     play_tone(frequency, 500); // Toca a nota correspondente por 500ms
 
+                    // Aguarda a tecla ser solta para evitar múltiplas leituras
                     while (!gpio_get(ROW_PINS[row])) {
                         sleep_ms(10); // Pequena espera para evitar leitura contínua
                     }
