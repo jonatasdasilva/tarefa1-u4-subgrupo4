@@ -446,6 +446,7 @@ void menu_music () {
     printf("5. Sol\n");
     printf("6. Lá\n");
     printf("7. Sí\n");
+    printf("0. Tocar música\n")
     printf("Reinicie o programa para voltar ao menu\n");
 
 }
