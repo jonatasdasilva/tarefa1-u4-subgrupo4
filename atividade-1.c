@@ -118,8 +118,11 @@ void music_keyboard() {
         gpio_put(COL_PINS[i], 1);           // Inicializa como nível alto
     }
 
+    // Variável de controle para sair do loop
+    bool exit_requested = false;
+
     // Loop infinito para detectar teclas pressionadas e tocar as notas
-    while (1) {
+    while (!exit_requested) {
         for (int col = 0; col < 4; col++) {
             gpio_put(COL_PINS[col], 0); // Ativa a coluna atual (nível baixo)
 
@@ -127,8 +130,9 @@ void music_keyboard() {
                 if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
                     // Verifica se a tecla pressionada é o caractere '#'
                     if (row == 3 && col == 2) { // Assume que '#' está na linha 3, coluna 2
-                        printf("Saindo...\n");
-                        return; // Sai da função e retorna ao menu principal
+                        printf("Tecla '#' pressionada. Retornando ao menu...\n");
+                        exit_requested = true; // Define a variável de controle para sair do loop
+                        break; // Sai do loop interno das linhas
                     }
 
                     // Caso contrário, obtém a frequência da tecla e toca a nota
@@ -143,9 +147,11 @@ void music_keyboard() {
             }
 
             gpio_put(COL_PINS[col], 1); // Desativa a coluna atual (nível alto)
-        }
 
-        sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
+            if (exit_requested) {
+                break; // Sai do loop externo das colunas
+            }
+        }
     }
 }
 
