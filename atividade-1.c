@@ -258,6 +258,73 @@ void liga_leds() {
         gpio_put(LED_PIN_GREEN, true);
         sleep_ms(300); // Mantém o LED ligado por 300 ms
     } 
+    else if (value == '1') {
+        // Liga o LED ciano se o botão "1" for pressionado
+        printf("tecla pressionada: %c\n", value);
+        gpio_put(LED_PIN_BLUE, true);
+        gpio_put(LED_PIN_GREEN, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (value == '2') {
+        // Liga o LED magenta se o botão "2" for pressionado
+        printf("tecla pressionada: %c\n", value);
+        gpio_put(LED_PIN_RED, true);
+        gpio_put(LED_PIN_BLUE, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (value == '3') {
+        // Liga o LED amarelo se o botão "3" for pressionado
+        printf("tecla pressionada: %c\n", value);
+        gpio_put(LED_PIN_RED, true);
+        gpio_put(LED_PIN_GREEN, true);
+        sleep_ms(300); // Mantém o LED ligado por 300 ms
+    } 
+    else if (value == '0') {
+        // Liga a sequência de cores se o botão "4" for pressionado
+        printf("tecla pressionada: %c\n", value);
+        gpio_put(LED_PIN_RED, true);//Liga o led vermelho
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN, true);//Transiciona para o amarelo
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, false);//Transiciona para o verde
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE,true);//Transiciona para o ciano
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN,false);//Transiciona para o azul
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, true);//Transiciona para o magenta
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE, false);//Transiciona para o vermelho novamente
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, true);//Liga o led vermelho
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN, true);//Transiciona para o amarelo
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, false);//Transiciona para o verde
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE,true);//Transiciona para o ciano
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN,false);//Transiciona para o azul
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, true);//Transiciona para o magenta
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE, false);//Transiciona para o vermelho novamente
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, true);//Liga o led vermelho
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN, true);//Transiciona para o amarelo
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, false);//Transiciona para o verde
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE,true);//Transiciona para o ciano
+        sleep_ms(100);
+        gpio_put(LED_PIN_GREEN,false);//Transiciona para o azul
+        sleep_ms(100);
+        gpio_put(LED_PIN_RED, true);//Transiciona para o magenta
+        sleep_ms(100);
+        gpio_put(LED_PIN_BLUE, false);//Transiciona para o vermelho novamente
+        sleep_ms(100);
+    } 
     else {
         // Desliga todos os LEDs se nenhuma tecla relevante for pressionada
         gpio_put(LED_PIN_RED, false);
@@ -358,20 +425,57 @@ void menu () {
     printf("Bem vindo ao Teclado Matricial com Raspberry Pi Pico W\n");
     printf("Escolha uma das opções:\n");
     printf("1. Liga Leds\n");
-    printf("2. Notas Musicais em Keyboard\n");
+    printf("2. Música em Keyboard\n");
     printf("3. Código Morse luminoso\n");
     printf("4. Código Morse Sonoro\n");
     //printf("3. \n");
     printf("#. Para sair\n");
 }
 
-// Menu para acener os leds
+// Menu para função liga_leds
 void menu_leds () {
     printf("Escolha uma das opções:\n");
     printf("A. Liga Led Vermelho\n");
     printf("B. Liga Led Azul\n");
     printf("C. Liga Led Verde\n");
     printf("D. Liga Led Branco\n");
+    printf("1. Liga Led Ciano\n");
+    printf("2. Liga Led Magenta\n");
+    printf("3. Liga Led Amarelo\n");
+    printf("0. Sequência de Cores\n");
+    printf("#. Para Sair\n");
+
+}
+//Menu para função music_keyboard
+void menu_music () {
+    printf("Escolha uma das opções:\n");
+    printf("1. Dó\n");
+    printf("2. Ré\n");
+    printf("3. Mi\n");
+    printf("4. Fá\n");
+    printf("5. Sol\n");
+    printf("6. Lá\n");
+    printf("7. Sí\n");
+    printf("#. Para Sair\n");
+
+}
+//Menu para função morse_leds
+void menu_morse_leds () {
+    printf("Escolha uma das opções:\n");
+    printf("1. .----\n");
+    printf("2. ..---\n");
+    printf("3. ...--\n");
+    printf("4. ....-\n");
+    printf("5. .....\n");
+    printf("6. -....\n");
+    printf("7. --...\n");
+    printf("8. ---..\n");
+    printf("9. ----.\n");
+    printf("0. -----\n");
+    printf("A. .-\n");
+    printf("B. -...\n");
+    printf("C. -.-.\n");
+    printf("D. -.--\n");
     printf("#. Para Sair\n");
 
 }
