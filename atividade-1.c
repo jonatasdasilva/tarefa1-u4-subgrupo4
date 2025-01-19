@@ -348,10 +348,10 @@ void menu () {
     printf("Bem vindo ao Teclado Matricial com Raspberry Pi Pico W\n");
     printf("Escolha uma das opções:\n");
     printf("1. Liga Leds\n");
-    printf("4. Mostra no display\n");
-    printf("3. Opção vazia\n");
-    printf("4. Código Morse luminoso\n");
-    printf("5. Código Morse Sonoro\n");
+    printf("2. Música em Keyboard\n");
+    printf("3. Código Morse luminoso\n");
+    printf("4. Código Morse Sonoro\n");
+    //printf("3. \n");
     printf("#. Para sair\n");
 }
 
@@ -369,6 +369,7 @@ void menu_leds () {
 int main()
 {
 
+  printf("Digite  *  para entrar no Menu de Aplicações\n");
   stdio_init_all();
   // configuração do teclado
   setup_keyboard();
@@ -404,13 +405,14 @@ int main()
           }
 
           if (key == '3') {
-            execute_morse_in_leds();
+            printf("\n");
+            execute_morse_in_buzzers();
             menu();
           }
 
-          if (key == '5') {
+          if (key == '3') {
             printf("\n");
-            execute_morse_in_buzzers();
+            execute_morse_in_leds();
             menu();
           }
 
