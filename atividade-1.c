@@ -3,6 +3,7 @@
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 #include "hardware/gpio.h"
+#include "game_of_thrones.h"
 
 #define ROWS 4
 #define COLS 4
@@ -132,7 +133,10 @@ void music_keyboard() {
                         return; // Sai da função para voltar ao menu
                     }
 
-                    if (key >= '1' && key <= '7') { // Apenas teclas válidas para notas
+                    if (key == '0') { // Tocar música predefinida
+                        printf("Tocando música predefinida...\n");
+                        play_song(); // Função definida no arquivo .h para tocar a música
+                    } else if (key >= '1' && key <= '7') { // Apenas teclas válidas para notas
                         uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
                         play_tone(frequency, 500); // Toca a nota correspondente por 500ms
                     } else {
@@ -151,6 +155,7 @@ void music_keyboard() {
         sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
     }
 }
+
 // Emiti o sinal luminoso para o código Morse reerente ao ponto.
 void ponto()
 {
