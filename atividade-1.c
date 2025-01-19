@@ -103,7 +103,7 @@ void play_tone(uint frequency, uint duration_ms) {
     }
 }
 
-// Função que implementa o teclado musical
+// Função que implementa o teclado musical com retorno ao menu
 void music_keyboard() {
     // Configura os pinos do teclado musical
     for (int i = 0; i < 4; i++) {
@@ -125,8 +125,19 @@ void music_keyboard() {
 
             for (int row = 0; row < 4; row++) {
                 if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
-                    uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
-                    play_tone(frequency, 500); // Toca a nota correspondente por 500ms
+                    char key = KEYPAD[row][col]; // Determina a tecla pressionada
+
+                    if (key == '#') { // Verifica se é o comando para sair
+                        printf("Saindo do teclado musical...\n");
+                        return; // Sai da função para voltar ao menu
+                    }
+
+                    if (key >= '1' && key <= '7') { // Apenas teclas válidas para notas
+                        uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
+                        play_tone(frequency, 500); // Toca a nota correspondente por 500ms
+                    } else {
+                        printf("Tecla %c não corresponde a uma nota.\n", key);
+                    }
 
                     while (!gpio_get(ROW_PINS[row])) {
                         sleep_ms(10); // Pequena espera para evitar leitura contínua
@@ -140,7 +151,6 @@ void music_keyboard() {
         sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
     }
 }
-
 // Emiti o sinal luminoso para o código Morse reerente ao ponto.
 void ponto()
 {
