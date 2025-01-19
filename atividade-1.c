@@ -289,16 +289,16 @@ void execute_morse_in_buzzers() {
 
 // Função de emissão de luz para código Morse.
 void init_morse_led(const char *morse) {
-    // Recebe a strig correspondente ao código morse a ser transformado em som.
-    for (size_t i = 0; i < strlen(morse); i++) {
-        if (morse[i] == '.') {
-            ponto(); // led vermelho
-        } else if (morse[i] == '-') {
-            traco();// led azul
-        }
-       sleep_ms(125); 
-    }
-    sleep_ms(250);
+  // Recebe a strig correspondente ao código morse a ser transformado em som.
+  for (size_t i = 0; i < strlen(morse); i++) {
+    if (morse[i] == '.') {
+        ponto(); // led vermelho
+    } else if (morse[i] == '-') {
+        traco();// led azul
+    }
+    sleep_ms(125); 
+  }
+  sleep_ms(250);
 }
 
 // Realiza a leitura do caracter do teclado e conversão em código morse.
@@ -328,6 +328,7 @@ void execute_morse_in_leds() {
     }
     sleep_ms(50); // Delay Debounce
   }
+}
 
 // Inicializa os led
 void inicializa_leds() {
