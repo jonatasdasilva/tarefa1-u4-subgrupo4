@@ -211,24 +211,38 @@ void play_morse_code(const char *morse) {
 }
 
 //Função para ligar leds de acordo com a tecla pressionada
-void liga_leds(char key) {
-    if (key == 'A') {
+void liga_leds() {
+  while (true) {
+    gpio_put(LED_PIN_RED, false);
+    gpio_put(LED_PIN_BLUE, false);
+    gpio_put(LED_PIN_GREEN, false);
+    char value = scan_keypad(); // Ler novo caracter
+    if (value == '#'){
+        // Se for pressionado o caracter # sai da opção celecionada.
+      printf("Saindo...\n");
+      break;
+    }
+    if (value == 'A') {
+      printf("tecla pressionada: %c\n", value);
         // Liga o LED vermelho se o botão "A" for pressionado
         gpio_put(LED_PIN_RED, true);
         sleep_ms(300); // Mantém o LED ligado por 300 ms
     } 
-    else if (key == 'B') {
+    else if (value == 'B') {
         // Liga o LED azul se o botão "B" for pressionado
+        printf("tecla pressionada: %c\n", value);
         gpio_put(LED_PIN_BLUE, true);
         sleep_ms(300); // Mantém o LED ligado por 300 ms
     } 
-    else if (key == 'C') {
+    else if (value == 'C') {
         // Liga o LED verde se o botão "C" for pressionado
+        printf("tecla pressionada: %c\n", value);
         gpio_put(LED_PIN_GREEN, true);
         sleep_ms(300); // Mantém o LED ligado por 300 ms
     } 
-    else if (key == 'D') {
+    else if (value == 'D') {
         // Liga o LED branco se o botão "D" for pressionado
+        printf("tecla pressionada: %c\n", value);
         gpio_put(LED_PIN_RED, true);
         gpio_put(LED_PIN_BLUE, true);
         gpio_put(LED_PIN_GREEN, true);
@@ -240,8 +254,9 @@ void liga_leds(char key) {
         gpio_put(LED_PIN_BLUE, false);
         gpio_put(LED_PIN_GREEN, false);
     }
+    sleep_ms(50); // Delay Debounce
+  }
 }
-
 
 // Realiza a leitura do caracter do teclado e conversão em código morse.
 void execute_morse_in_buzzers() {
@@ -272,6 +287,7 @@ void execute_morse_in_buzzers() {
   }
 }
 
+// Função de emissão de luz para código Morse.
 void init_morse_led(const char *morse) {
     // Recebe a strig correspondente ao código morse a ser transformado em som.
     for (size_t i = 0; i < strlen(morse); i++) {
@@ -312,74 +328,111 @@ void execute_morse_in_leds() {
     }
     sleep_ms(50); // Delay Debounce
   }
+
+// Inicializa os led
+void inicializa_leds() {
+  // Configura o LED vermelho como saída
+  gpio_init(LED_PIN_RED);
+  gpio_set_dir(LED_PIN_RED, GPIO_OUT);
+  // Configura o LED azul como saída
+  gpio_init(LED_PIN_BLUE);
+  gpio_set_dir(LED_PIN_BLUE, GPIO_OUT);
+  // Configura o LED verde como saída
+  gpio_init(LED_PIN_GREEN);
+  gpio_set_dir(LED_PIN_GREEN, GPIO_OUT);
+}
+
+// menu principal
+void menu () {
+    printf("Bem vindo ao Teclado Matricial com Raspberry Pi Pico W\n");
+    printf("Escolha uma das opções:\n");
+    printf("1. Liga Leds\n");
+    printf("4. Mostra no display\n");
+    printf("3. Opção vazia\n");
+    printf("4. Código Morse luminoso\n");
+    printf("5. Código Morse Sonoro\n");
+    printf("#. Para sair\n");
+}
+
+// Menu para acener os leds
+void menu_leds () {
+    printf("Escolha uma das opções:\n");
+    printf("A. Liga Led Vermelho\n");
+    printf("B. Liga Led Azul\n");
+    printf("C. Liga Led Verde\n");
+    printf("D. Liga Led Branco\n");
+    printf("#. Para Sair\n");
+
 }
 
 int main()
 {
 
-    stdio_init_all();
-    // configuração do teclado
-    setup_keyboard();
+  stdio_init_all();
+  // configuração do teclado
+  setup_keyboard();
+  inicializa_leds();
+  initialization_buzzers();
 
-    // Configura o LED vermelho como saída
-    gpio_init(LED_PIN_RED);
-    gpio_set_dir(LED_PIN_RED, GPIO_OUT);
-    // Configura o LED azul como saída
-    gpio_init(LED_PIN_BLUE);
-    gpio_set_dir(LED_PIN_BLUE, GPIO_OUT);
-    // Configura o LED verde como saída
-    gpio_init(LED_PIN_GREEN);
-    gpio_set_dir(LED_PIN_GREEN, GPIO_OUT);
+  while (1)
+  {
+    // leitura do teclado
+    char key = scan_keypad();
+    //printf("saiu na função scan\n");
+    if (key != '\0')
+    { // Se alguma tecla foi pressionada
+      printf("tecla pressionada: %c\n", key);
 
-    while (1)
-    {
-        // leitura do teclado
-        char key = scan_keypad();
-        gpio_put(LED_PIN_RED, false);
-        gpio_put(LED_PIN_BLUE, false);
-        gpio_put(LED_PIN_GREEN, false);
-        if (key != '\0')
-        { // Se alguma tecla foi pressionada
-            if (key == '*'){
-                // Entra no menu de seleção de funcionalidades
-                char op = scan_keypad();
-                switch (op)
-                {
-                case 1:
-                    liga_leds(key);
-                    break;
-                
-                case 2:
-                      music_keyboard(); // Chamando a funcionalidade do teclado musical
-                    break;
+      if (key == '*'){
+        menu();
+        sleep_ms(50);
+        while(key != '#') {
+          char key = scan_keypad();
+          
+          if (key == '1') {
+            menu_leds ();
+            liga_leds();
+            sleep_ms(50);
+            menu();
+          }
 
-                case 3:
-                    /* code */
-                    break;
-                
-                case 4:
-                    /* code */
-                    break;
-                
-                case 5:
-                    execute_morse_in_buzzers();
-                    break;
-                
-                case '#':
-                    break;
-                
-                default:
-                    break;
-                }
-                break; // sai o if
-            }
-            //printf("tecla pressionada: %c\n", key);
-            if (key == '#')
-            {
-                // Saído do programa
-                return 1;
-            }
+          if (key == '2') {
+            music_keyboard(); // Chamando a funcionalidade do teclado musical
+            sleep_ms(50);
+            menu();
+          }
+
+          if (key == '3') {
+            execute_morse_in_leds();
+            menu();
+          }
+
+          if (key == '5') {
+            printf("\n");
+            execute_morse_in_buzzers();
+            menu();
+          }
+
+          if (key == '#') {
+            printf("saindo...\n");
+            break;
+          }
+          sleep_ms(50);
         }
-    return 0;
+      }
+
+      if (key == '1'){
+          
+      }
+      //printf("tecla pressionada: %c\n", key);
+      if (key == '#')
+      {
+        // Saído do programa
+        printf("saindo...\n");
+        return 1;
+      }
     }
+    sleep_ms(50);
+  }
+  return 0;
 }
