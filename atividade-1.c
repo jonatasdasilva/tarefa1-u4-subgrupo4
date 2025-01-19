@@ -118,13 +118,17 @@ void music_keyboard() {
         gpio_put(COL_PINS[i], 1);           // Inicializa como nível alto
     }
 
+    // Variável de controle para sair do loop
+    bool exit_requested = false;
+
     // Loop infinito para detectar teclas pressionadas e tocar as notas
-    while (1) {
+    while (!exit_requested) {
         for (int col = 0; col < 4; col++) {
             gpio_put(COL_PINS[col], 0); // Ativa a coluna atual (nível baixo)
 
             for (int row = 0; row < 4; row++) {
                 if (!gpio_get(ROW_PINS[row])) { // Se a linha estiver em nível baixo, tecla pressionada
+<<<<<<< HEAD
                     char key = KEYPAD[row][col]; // Determina a tecla pressionada
 
                     if (key == '#') { // Verifica se é o comando para sair
@@ -138,7 +142,20 @@ void music_keyboard() {
                     } else {
                         printf("Tecla %c não corresponde a uma nota.\n", key);
                     }
+=======
+                    // Verifica se a tecla pressionada é o caractere '#'
+                    if (row == 3 && col == 2) { // Assume que '#' está na linha 3, coluna 2
+                        printf("Tecla '#' pressionada. Retornando ao menu...\n");
+                        exit_requested = true; // Define a variável de controle para sair do loop
+                        break; // Sai do loop interno das linhas
+                    }
 
+                    // Caso contrário, obtém a frequência da tecla e toca a nota
+                    uint frequency = note_frequencies[row][col]; // Obtém a frequência da tecla
+                    play_tone(frequency, 500); // Toca a nota correspondente por 500ms
+>>>>>>> 290121548ab520e28b1e73e8bf5537360c05048b
+
+                    // Aguarda a tecla ser solta para evitar múltiplas leituras
                     while (!gpio_get(ROW_PINS[row])) {
                         sleep_ms(10); // Pequena espera para evitar leitura contínua
                     }
@@ -146,9 +163,11 @@ void music_keyboard() {
             }
 
             gpio_put(COL_PINS[col], 1); // Desativa a coluna atual (nível alto)
-        }
 
-        sleep_ms(50); // Pequena pausa para evitar leitura instável (debounce)
+            if (exit_requested) {
+                break; // Sai do loop externo das colunas
+            }
+        }
     }
 }
 
