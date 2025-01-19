@@ -147,7 +147,6 @@ void ponto()
     gpio_put(LED_PIN_RED,true);
     sleep_ms(200);
     gpio_put(LED_PIN_RED,false);
-    sleep_ms(125);
 }
 
 // Emiti o sinal luminoso para o código Morse reerente ao traço.
@@ -156,7 +155,6 @@ void traco()
      gpio_put(LED_PIN_BLUE,true);
      sleep_ms(200);
      gpio_put(LED_PIN_BLUE,false);
-     sleep_ms(125);
 }
 
 // Inicializa os buzzers a serem utilizados.
