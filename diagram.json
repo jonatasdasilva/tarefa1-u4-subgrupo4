@@ -10,13 +10,7 @@
       "left": 406.75,
       "attrs": { "builder": "pico-sdk" }
     },
-    {
-      "type": "wokwi-membrane-keypad",
-      "id": "keypad1",
-      "top": -78.8,
-      "left": -301.6,
-      "attrs": {}
-    },
+    { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -88.4, "left": 533.6, "attrs": {} },
     {
       "type": "wokwi-buzzer",
       "id": "bz1",
@@ -69,22 +63,22 @@
     [ "pico:GP10", "bz1:1", "orange", [ "h0" ] ],
     [ "bz1:2", "pico:GND.4", "red", [ "v0" ] ],
     [ "pico:GND.6", "bz2:2", "red", [ "h67.51", "v-67.2" ] ],
-    [ "keypad1:R1", "pico:GP2", "gray", [ "v0" ] ],
-    [ "keypad1:R2", "pico:GP3", "gray", [ "v0" ] ],
-    [ "keypad1:R3", "pico:GP8", "gray", [ "v0" ] ],
-    [ "keypad1:R4", "pico:GP9", "gray", [ "v0" ] ],
-    [ "keypad1:C1", "pico:GP20", "purple", [ "v259.2", "h691.1", "v-96" ] ],
-    [ "keypad1:C2", "pico:GP19", "purple", [ "v249.6", "h672", "v-76.84" ] ],
-    [ "keypad1:C3", "pico:GP18", "purple", [ "v240", "h652.65", "v-57.64" ] ],
-    [ "keypad1:C4", "pico:GP17", "purple", [ "v230.4", "h633.3", "v-28.84" ] ],
+    [ "keypad1:R1", "pico:GP2", "gray", [ "v96", "h-211.2", "v-28.8" ] ],
+    [ "keypad1:R2", "pico:GP3", "gray", [ "v105.6", "h-230.8", "v-28.8" ] ],
+    [ "keypad1:R3", "pico:GP8", "gray", [ "v124.8", "h-240.3" ] ],
+    [ "keypad1:R4", "pico:GP9", "gray", [ "v134.4", "h-249.8" ] ],
+    [ "keypad1:C1", "pico:GP20", "purple", [ "v172.8", "h-221.21" ] ],
     [ "pico:GP22", "bz2:1", "green", [ "h0" ] ],
     [ "rgb1:G", "r1:1", "green", [ "v0" ] ],
     [ "rgb1:R", "r3:1", "red", [ "v0" ] ],
     [ "rgb1:B", "r2:1", "blue", [ "h9.6", "v-11.2" ] ],
-    [ "r1:2", "pico:GP11", "green", [ "v46.8", "h85.2", "v9.6" ] ],
+    [ "r1:2", "pico:GP11", "green", [ "v56.4", "h134.4" ] ],
     [ "pico:GND.3", "rgb1:COM", "black", [ "h-144", "v-134" ] ],
     [ "pico:GP13", "r3:2", "red", [ "h-153.6", "v-75.56" ] ],
-    [ "r2:2", "pico:GP12", "blue", [ "v27.6", "h115.2" ] ]
+    [ "r2:2", "pico:GP12", "blue", [ "v66", "h115.2" ] ],
+    [ "pico:GP18", "keypad1:C3", "purple", [ "h211.51", "v-191.96" ] ],
+    [ "pico:GP17", "keypad1:C4", "purple", [ "h0" ] ],
+    [ "pico:GP19", "keypad1:C2", "purple", [ "h0" ] ]
   ],
   "serialMonitor": { "display": "auto", "newline": "lf" },
   "dependencies": {}
