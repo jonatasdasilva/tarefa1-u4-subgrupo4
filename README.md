@@ -4,9 +4,9 @@
 ## **🛠 Projeto: Leitura de Teclado Matricial com Raspberry Pi Pico**  
 
 ### 📌 **Descrição**  
-Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico W**. O código implementa uma variedade de aplicações, que conecta o periférico principal (teclado matricial) à funcionalidades específicas para cada uma das aplicações. A função principal do teclado é identificar a tecla pressionada, executar uma ação desejada e exibe a informação no **monitor serial**.Juntamente com o código, foi produzido um vídeo demonstrando o processo e o resultado da aplicação.
+Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico W**. O código implementa uma variedade de aplicações, que conecta o periférico principal (teclado matricial) à funcionalidades específicas para cada uma das aplicações. A função principal do teclado é identificar a tecla pressionada, executar uma ação desejada e exibe a informação no **monitor serial**. Juntamente com o código, foi produzido um vídeo demonstrando o processo e o resultado da aplicação.
 
-Link para o vídeo: [[Click aqui](https://youtu.be/bNFVArIUhn0)].  
+Link para o vídeo: [[Click aqui](https://youtu.be/_dtULtBuciQ)].  
 
 ---
 
