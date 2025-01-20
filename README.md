@@ -146,6 +146,59 @@ gpio_put(LED_PIN_RED, false);
 
 #### 2. 🚨 Conversor de Código Morse em sinal luminoso 
 
+Esta função converte caracteres digitados em um teclado matricial em sinais luminosos, representando os pontos e traços do código Morse. Os sinais são exibidos por meio de LEDs, tornando possível interpretar mensagens Morse visualmente.
+
+##### 🖥 Detalhamento das Funções
+
+###### 💡 ponto()
+
+Emite um sinal luminoso curto, correspondente ao ponto (.) no código Morse.
+
+Funcionamento:
+
+- Ativa o LED vermelho.
+- Mantém o LED aceso por 200 ms.
+- Desliga o LED vermelho.
+
+###### 💡 traco()
+
+Emite um sinal luminoso longo, correspondente ao traço (-) no código Morse.
+
+Funcionamento:
+- Ativa o LED azul.
+- Mantém o LED aceso por 200 ms.
+- Desliga o LED azul.
+
+###### 🖥 init_morse_led()
+
+Interpreta uma string de código Morse e aciona as funções ponto() e traco() para exibir os sinais luminosos.
+
+Parâmetros: Recebe uma string contendo a sequência de pontos e traços.
+
+Funcionamento:
+
+- Percorre cada caractere da string Morse.
+- Aciona ponto() para '.' e traco() para '-'.
+- Inclui um atraso de 125 ms entre cada sinal e 250 ms após a exibição completa do caractere.
+
+##### 🔄 execute_morse_in_leds()
+
+Lê o teclado matricial, identifica a tecla pressionada, e emite o código Morse correspondente como sinais luminosos.
+
+Funcionamento:
+
+- Lê a tecla pressionada.
+- Verifica se a tecla é o caractere '#' para encerrar a função.
+- Imprime a tecla pressionada e busca o código Morse correspondente.
+- Emite o código Morse como sinais luminosos através dos LEDs.
+- 
+##### 🎯 Comportamento Principal
+
+A função `execute_morse_in_leds()` mantém-se em um loop, lendo teclas e convertendo-as em sinais luminosos até que a tecla '#' seja pressionada.
+Garante uma exibição clara dos sinais Morse, com pausas para evitar confusões.
+
+💡 Exemplo de Uso Ao pressionar uma tecla, o LED correspondente pisca em padrões que representam o código Morse do caractere, proporcionando uma interpretação visual eficiente das mensagens.
+---
 
 #### 3. 🔉 Conversor de Código Morse em som
 
@@ -325,3 +378,8 @@ Menu de Música:
    6. Lá
    7. Sí
    **0. Tocar música**
+
+---
+## Créditos
+
+Desenvolvido pelo Grupo 2, Subgrupo 4, como parte do estudo e prática de microcontroladores com a arquitetura RP2040
