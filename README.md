@@ -4,7 +4,9 @@
 ## **🛠 Projeto: Leitura de Teclado Matricial com Raspberry Pi Pico**  
 
 ### 📌 **Descrição**  
-Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico W**. O código implementa uma variedade de aplicações, que conecta o periférico principal (teclado matricial) à funcionalidades específicas para cada uma das aplicações. A função principal do teclado é identificar a tecla pressionada, executar uma ação desejada e exibe a informação no **monitor serial**.  
+Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o **Raspberry Pi Pico W**. O código implementa uma variedade de aplicações, que conecta o periférico principal (teclado matricial) à funcionalidades específicas para cada uma das aplicações. A função principal do teclado é identificar a tecla pressionada, executar uma ação desejada e exibe a informação no **monitor serial**.Juntamente com o código, foi produzido um vídeo demonstrando o processo e o resultado da aplicação.
+
+Link para o vídeo: [[Click aqui](https://youtu.be/bNFVArIUhn0)].  
 
 ---
 
@@ -81,7 +83,7 @@ Entrada de Teclado: A função aguarda o pressionamento de teclas, executando a�
 
 - Tecla #: Sai da função e encerra o loop. `Exemplo: Saindo... 👋`
 - Tecla A: Liga o LED vermelho por 300 ms. 🔴
--Tecla B: Liga o LED azul por 300 ms. 🔵
+- Tecla B: Liga o LED azul por 300 ms. 🔵
 - Tecla C: Liga o LED verde por 300 ms. 🟢
 - Tecla D: Liga todos os LEDs (vermelho, azul e verde) por 300 ms. ⚪
 - Tecla 1: Liga o LED ciano (azul + verde) por 300 ms. 💠
@@ -144,6 +146,59 @@ gpio_put(LED_PIN_RED, false);
 
 #### 2. 🚨 Conversor de Código Morse em sinal luminoso 
 
+Esta função converte caracteres digitados em um teclado matricial em sinais luminosos, representando os pontos e traços do código Morse. Os sinais são exibidos por meio de LEDs, tornando possível interpretar mensagens Morse visualmente.
+
+##### 🖥 Detalhamento das Funções
+
+###### 💡 ponto()
+
+Emite um sinal luminoso curto, correspondente ao ponto (.) no código Morse.
+
+Funcionamento:
+
+- Ativa o LED vermelho.
+- Mantém o LED aceso por 200 ms.
+- Desliga o LED vermelho.
+
+###### 💡 traco()
+
+Emite um sinal luminoso longo, correspondente ao traço (-) no código Morse.
+
+Funcionamento:
+- Ativa o LED azul.
+- Mantém o LED aceso por 200 ms.
+- Desliga o LED azul.
+
+###### 🖥 init_morse_led()
+
+Interpreta uma string de código Morse e aciona as funções ponto() e traco() para exibir os sinais luminosos.
+
+Parâmetros: Recebe uma string contendo a sequência de pontos e traços.
+
+Funcionamento:
+
+- Percorre cada caractere da string Morse.
+- Aciona ponto() para '.' e traco() para '-'.
+- Inclui um atraso de 125 ms entre cada sinal e 250 ms após a exibição completa do caractere.
+
+##### 🔄 execute_morse_in_leds()
+
+Lê o teclado matricial, identifica a tecla pressionada, e emite o código Morse correspondente como sinais luminosos.
+
+Funcionamento:
+
+- Lê a tecla pressionada.
+- Verifica se a tecla é o caractere '#' para encerrar a função.
+- Imprime a tecla pressionada e busca o código Morse correspondente.
+- Emite o código Morse como sinais luminosos através dos LEDs.
+- 
+##### 🎯 Comportamento Principal
+
+A função `execute_morse_in_leds()` mantém-se em um loop, lendo teclas e convertendo-as em sinais luminosos até que a tecla '#' seja pressionada.
+Garante uma exibição clara dos sinais Morse, com pausas para evitar confusões.
+
+💡 Exemplo de Uso Ao pressionar uma tecla, o LED correspondente pisca em padrões que representam o código Morse do caractere, proporcionando uma interpretação visual eficiente das mensagens.
+---
 
 #### 3. 🔉 Conversor de Código Morse em som
 
@@ -211,16 +266,6 @@ Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o *
 
 ---
 
-##### 📋 Dependências  
-Antes de compilar e rodar o projeto, certifique-se de que possui:  
-
-- **Raspberry Pi Pico SDK** configurado corretamente  
-- **CMake** instalado  
-- **Compilador ARM GCC** instalado  
-- **Extensão Raspberry Pi Pico para VSCode** (opcional)  
-
----
-
 ##### 🏗 Esquema de Conexão  
 
 | **Linha (ROW)** | **Pino GPIO** | **Coluna (COL)** | **Pino GPIO** |
@@ -271,42 +316,70 @@ Ao pressionar uma tecla no teclado:
    - **7 → Si**
 ---
 
-#### 5. 📋 Função: Emissão de Sinal Luminoso para Código Morse
+#### 5. 🎶 Melodia Game of Thrones com Raspberry Pi Pico
 
-Esta função converte caracteres digitados em um teclado matricial em sinais luminosos, representando os pontos e traços do código Morse. Os sinais são exibidos por meio de LEDs, tornando possível interpretar mensagens Morse visualmente.
+##### 📌 **Descrição**  
+Este projeto implementa a reprodução de uma melodia baseada na música de **Game of Thrones** utilizando o **Raspberry Pi Pico** e dois **buzzers**. Quando executado, o código alterna entre os buzzers para tocar as notas musicais da melodia. Cada nota é reproduzida por um buzzer diferente, e o tempo de duração de cada nota é controlado, criando a sequência musical característica da música de Game of Thrones.
 
-🖥 Detalhamento das Funções
-
-#### 💡 ponto()
-Emite um sinal luminoso curto, correspondente ao ponto (.) no código Morse.
-Funcionamento:
-Ativa o LED vermelho.
-Mantém o LED aceso por 200 ms.
-Desliga o LED vermelho.
-####💡 traco()
-Emite um sinal luminoso longo, correspondente ao traço (-) no código Morse.
-Funcionamento:
-Ativa o LED azul.
-Mantém o LED aceso por 200 ms.
-Desliga o LED azul.
-#### 🖥 init_morse_led()
-Interpreta uma string de código Morse e aciona as funções ponto() e traco() para exibir os sinais luminosos.
-Parâmetros:
-Recebe uma string contendo a sequência de pontos e traços.
-Funcionamento:
-Percorre cada caractere da string Morse.
-Aciona ponto() para '.' e traco() para '-'.
-Inclui um atraso de 125 ms entre cada sinal e 250 ms após a exibição completa do caractere.
-#### 🔄 execute_morse_in_leds()
-Lê o teclado matricial, identifica a tecla pressionada, e emite o código Morse correspondente como sinais luminosos.
-Funcionamento:
-Lê a tecla pressionada.
-Verifica se a tecla é o caractere '#' para encerrar a função.
-Imprime a tecla pressionada e busca o código Morse correspondente.
-Emite o código Morse como sinais luminosos através dos LEDs.
-#### 🎯 Comportamento Principal
-
-A função execute_morse_in_leds() mantém-se em um loop, lendo teclas e convertendo-as em sinais luminosos até que a tecla '#' seja pressionada.
-Garante uma exibição clara dos sinais Morse, com pausas para evitar confusões.
-💡 Exemplo de Uso Ao pressionar uma tecla, o LED correspondente pisca em padrões que representam o código Morse do caractere, proporcionando uma interpretação visual eficiente das mensagens.
 ---
+
+##### 🏗 **Esquema de Conexão**  
+
+| **Buzzer**  | **Pino GPIO** |
+|-------------|---------------|
+| Buzzer 1    | GP10          |
+| Buzzer 2    | GP22          |
+
+> **Obs.:** O projeto utiliza **dois buzzers** conectados aos pinos **GP10** e **GP22** para alternar entre os sons.
+
+---
+
+##### 📜 **Código Principal**  
+O projeto possui a função principal `play_song()`, que alterna entre dois buzzers para reproduzir as notas da melodia de Game of Thrones. O código está estruturado da seguinte forma:
+
+###### 🔊 **1. Função `tocar_buzzer_frequencia()`**  
+Essa função é responsável por gerar uma frequência sonora em um buzzer específico. Ela calcula o tempo de ciclo necessário para produzir a frequência e ativa/desativa o buzzer alternadamente para produzir o som desejado.
+
+###### 🎶 **2. Função `tocar_melodia()`**  
+Essa função percorre uma sequência de notas e suas respectivas durações, alternando entre os dois buzzers (definidos pelos pinos `pin1` e `pin2`). Cada nota é tocada por um período específico, e após a execução de cada nota, há uma pausa de 50 ms para evitar sobreposição de sons.
+
+###### 🎧 **3. Função `play_song()`**  
+Esta é a função principal que chama a função `tocar_melodia()` com os parâmetros apropriados (pins dos buzzers, sequência de notas e durações) e aguarda um pequeno intervalo entre as execuções.
+
+---
+
+##### 🎯 **Exemplo de Funcionamento**  
+Ao rodar o código, a melodia de Game of Thrones será tocada alternando entre os dois buzzers. As notas são reproduzidas de acordo com a sequência e a duração definidas no código.
+
+---
+
+##### ⚙ **Funcionamento**:
+
+   - **Alternância de Buzzers**: A melodia é tocada alternando entre os dois buzzers conectados aos pinos **GP10** e **GP22**.
+   - **Notas e Durações**: As notas são definidas pela frequência e duração em arrays, e cada nota é tocada com base nesses parâmetros.
+   - **Pausa entre Notas**: Após cada nota, há uma pausa de 50 ms, garantindo que os sons não se sobreponham.
+
+---
+
+##### 🖥 **Função Dependente**:
+A função `gpio_put()` é utilizada para ativar e desativar os buzzers, e `sleep_ms()` é usada para adicionar pausas entre as notas.
+
+---
+
+##### 🎯 Exemplo de Funcionamento  
+
+Menu de Música:
+   Escolha uma das opções:
+   1. Dó
+   2. Ré
+   3. Mi
+   4. Fá
+   5. Sol
+   6. Lá
+   7. Sí
+   **0. Tocar música**
+
+---
+## Créditos
+
+Desenvolvido pelo Grupo 2, Subgrupo 4, como parte do estudo e prática de microcontroladores com a arquitetura RP2040
