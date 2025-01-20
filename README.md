@@ -81,7 +81,7 @@ Entrada de Teclado: A função aguarda o pressionamento de teclas, executando a�
 
 - Tecla #: Sai da função e encerra o loop. `Exemplo: Saindo... 👋`
 - Tecla A: Liga o LED vermelho por 300 ms. 🔴
--Tecla B: Liga o LED azul por 300 ms. 🔵
+- Tecla B: Liga o LED azul por 300 ms. 🔵
 - Tecla C: Liga o LED verde por 300 ms. 🟢
 - Tecla D: Liga todos os LEDs (vermelho, azul e verde) por 300 ms. ⚪
 - Tecla 1: Liga o LED ciano (azul + verde) por 300 ms. 💠
@@ -211,16 +211,6 @@ Este projeto implementa a leitura de um **teclado matricial 4x4** utilizando o *
 
 ---
 
-##### 📋 Dependências  
-Antes de compilar e rodar o projeto, certifique-se de que possui:  
-
-- **Raspberry Pi Pico SDK** configurado corretamente  
-- **CMake** instalado  
-- **Compilador ARM GCC** instalado  
-- **Extensão Raspberry Pi Pico para VSCode** (opcional)  
-
----
-
 ##### 🏗 Esquema de Conexão  
 
 | **Linha (ROW)** | **Pino GPIO** | **Coluna (COL)** | **Pino GPIO** |
@@ -271,5 +261,65 @@ Ao pressionar uma tecla no teclado:
    - **7 → Si**
 ---
 
-#### 5. 
+#### 5. 🎶 Melodia Game of Thrones com Raspberry Pi Pico
+
+##### 📌 **Descrição**  
+Este projeto implementa a reprodução de uma melodia baseada na música de **Game of Thrones** utilizando o **Raspberry Pi Pico** e dois **buzzers**. Quando executado, o código alterna entre os buzzers para tocar as notas musicais da melodia. Cada nota é reproduzida por um buzzer diferente, e o tempo de duração de cada nota é controlado, criando a sequência musical característica da música de Game of Thrones.
+
 ---
+
+##### 🏗 **Esquema de Conexão**  
+
+| **Buzzer**  | **Pino GPIO** |
+|-------------|---------------|
+| Buzzer 1    | GP10          |
+| Buzzer 2    | GP22          |
+
+> **Obs.:** O projeto utiliza **dois buzzers** conectados aos pinos **GP10** e **GP22** para alternar entre os sons.
+
+---
+
+##### 📜 **Código Principal**  
+O projeto possui a função principal `play_song()`, que alterna entre dois buzzers para reproduzir as notas da melodia de Game of Thrones. O código está estruturado da seguinte forma:
+
+###### 🔊 **1. Função `tocar_buzzer_frequencia()`**  
+Essa função é responsável por gerar uma frequência sonora em um buzzer específico. Ela calcula o tempo de ciclo necessário para produzir a frequência e ativa/desativa o buzzer alternadamente para produzir o som desejado.
+
+###### 🎶 **2. Função `tocar_melodia()`**  
+Essa função percorre uma sequência de notas e suas respectivas durações, alternando entre os dois buzzers (definidos pelos pinos `pin1` e `pin2`). Cada nota é tocada por um período específico, e após a execução de cada nota, há uma pausa de 50 ms para evitar sobreposição de sons.
+
+###### 🎧 **3. Função `play_song()`**  
+Esta é a função principal que chama a função `tocar_melodia()` com os parâmetros apropriados (pins dos buzzers, sequência de notas e durações) e aguarda um pequeno intervalo entre as execuções.
+
+---
+
+##### 🎯 **Exemplo de Funcionamento**  
+Ao rodar o código, a melodia de Game of Thrones será tocada alternando entre os dois buzzers. As notas são reproduzidas de acordo com a sequência e a duração definidas no código.
+
+---
+
+##### ⚙ **Funcionamento**:
+
+   - **Alternância de Buzzers**: A melodia é tocada alternando entre os dois buzzers conectados aos pinos **GP10** e **GP22**.
+   - **Notas e Durações**: As notas são definidas pela frequência e duração em arrays, e cada nota é tocada com base nesses parâmetros.
+   - **Pausa entre Notas**: Após cada nota, há uma pausa de 50 ms, garantindo que os sons não se sobreponham.
+
+---
+
+##### 🖥 **Função Dependente**:
+A função `gpio_put()` é utilizada para ativar e desativar os buzzers, e `sleep_ms()` é usada para adicionar pausas entre as notas.
+
+---
+
+##### 🎯 Exemplo de Funcionamento  
+
+Menu de Música:
+   Escolha uma das opções:
+   1. Dó
+   2. Ré
+   3. Mi
+   4. Fá
+   5. Sol
+   6. Lá
+   7. Sí
+   **0. Tocar música**
